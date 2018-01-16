@@ -1,0 +1,17 @@
+# Object files
+*.o
+*.ko
+*.obj
+*.elf
+
+# Libraries
+*.lib
+*.a
+*.la
+*.lo
+
+src/canopy_scaling
+src/version.c
+src/canopy_scaling.dSYM*
+
+scripts/__pycache__/*.pyc
