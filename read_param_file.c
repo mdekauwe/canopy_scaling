@@ -23,7 +23,7 @@ int parse_ini_file(control *c, params *p, state *s)
     int line_number = 0;
 
     if ((c->ifp = fopen(c->cfg_fname, "r")) == NULL){
-        prog_error("Error opening output file for write on line", __LINE__);
+        prog_error("Error opening param file for read on line", __LINE__);
     }
 
     while (fgets(line, sizeof(line), c->ifp) != NULL) {
