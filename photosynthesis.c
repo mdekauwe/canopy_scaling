@@ -141,67 +141,7 @@ void photosynthesis_C3(control *c, canopy_wk *cw, met *m, params *p, state *s) {
     return;
 }
 
-void photosynthesis_C3_emax(control *c, canopy_wk *cw, met *m, params *p,
-                            state *s, double par, double water_stress) {
-    /*
-        Calculate photosynthesis as above but for here we are resolving Ci and
-        A for a given gs (Jarvis style) to get the Emax solution.
 
-        This follows MAESPA code.
-    */
-
-    double gamma_star, km, jmax, vcmax, rd, Vj, gs;
-    double A, B, C, Ac, Aj, Cs, J;
-    int    idx, qudratic_error = FALSE, large_root;
-
-    // Unpack calculated properties from first photosynthesis solution
-    idx = cw->ileaf;
-    Cs = cw->ts_Cs;
-    vcmax = cw->ts_vcmax;
-    km = cw->ts_km;
-    gamma_star = cw->ts_gamma_star;
-    rd = cw->ts_rd;
-    jmax = cw->ts_jmax;
-    qudratic_error = FALSE;
-    large_root = FALSE;
-    J = quad(p->theta, -(p->alpha_j * par + jmax),
-             p->alpha_j * par * jmax, large_root, &qudratic_error);
-    Vj = J / 4.0;
-    gs = cw->gsc_leaf[idx];
-
-    /* Solution when Rubisco rate is limiting */
-    //A = 1.0 / gs;
-    //B = (0.0 - vcmax) / gs - Cs - km;
-    //C = vcmax * (Cs - gamma_star);
-
-    // From MAESTRA, not sure of the reason for the difference.
-    A = 1.0 / gs;
-    B = (rd - vcmax) / gs - Cs - km;
-    C = vcmax * (Cs - gamma_star) - rd * (Cs + km);
-
-    qudratic_error = FALSE;
-    large_root = FALSE;
-    Ac = quad(A, B, C, large_root, &qudratic_error);
-    if (qudratic_error) {
-        Ac = 0.0;
-    }
-
-    /* Solution when electron transport rate is limiting */
-    A = 1.0 / gs;
-    B = (rd - Vj) / gs - Cs - 2.0 * gamma_star;
-    C = Vj * (Cs - gamma_star) - rd * (Cs + 2.0 * gamma_star);
-
-    qudratic_error = FALSE;
-    large_root = FALSE;
-    Aj = quad(A, B, C, large_root, &qudratic_error);
-    if (qudratic_error) {
-        Aj = 0.0;
-    }
-
-    cw->an_leaf[idx] = MIN(Ac, Aj);
-
-    return;
-}
 
 double calc_co2_compensation_point(params *p, double tleaf) {
     /*

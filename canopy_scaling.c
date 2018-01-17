@@ -188,6 +188,7 @@ void run_sim(canopy_wk *cw, control *c, fluxes *f, met_arrays *ma, met *m,
         } else {
             year = ma->year[c->day_idx];
         }
+
         if (is_leap_year(year))
             c->num_days = 366;
         else
@@ -239,6 +240,7 @@ void run_sim(canopy_wk *cw, control *c, fluxes *f, met_arrays *ma, met *m,
 
                 mate_C3_photosynthesis(c, f, m, p, s, s->day_length[doy],
                                        ncontent);
+                printf("%d %d %lf\n", (int)year, doy, f->gpp*100.);
             }
 
             c->day_idx++;
