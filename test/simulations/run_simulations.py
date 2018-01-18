@@ -31,7 +31,7 @@ def main(experiment_id, latitude, longitude, treatment, scheme):
     # dir names
     base_param_name = "base_start"
     base_dir = os.path.dirname(os.getcwd())
-    base_param_dir = "/Users/%s/Desktop/canopy_scaling/params" % (USER)
+    base_param_dir = "../../params"
 
     param_dir = os.path.join(base_dir, "params")
     met_dir = os.path.join(base_dir, "met_data")
@@ -109,8 +109,8 @@ def main(experiment_id, latitude, longitude, treatment, scheme):
     ad.adjust_param_file(cfg_fname, replace_dict)
     ofname = " > outputs/%s_%s.csv" % (scheme, treatment)
     #print(cfg_fname)
-    os.system(GDAY + cfg_fname + ofname)
-    #os.system(GDAY + cfg_fname)
+    #os.system(GDAY + cfg_fname + ofname)
+    os.system(GDAY + cfg_fname)
 
 
 
@@ -121,8 +121,8 @@ if __name__ == "__main__":
     latitude = -35.6566
     longitude = 148.152
 
-    main(experiment_id, latitude, longitude, treatment="AMB", scheme="twoleaf")
-    main(experiment_id, latitude, longitude, treatment="ELE", scheme="twoleaf")
+    #main(experiment_id, latitude, longitude, treatment="AMB", scheme="twoleaf")
+    #main(experiment_id, latitude, longitude, treatment="ELE", scheme="twoleaf")
 
     main(experiment_id, latitude, longitude, treatment="AMB", scheme="mate")
     main(experiment_id, latitude, longitude, treatment="ELE", scheme="mate")
