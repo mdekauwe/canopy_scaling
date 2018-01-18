@@ -109,7 +109,6 @@ int main(int argc, char **argv)
         s->shootnc = p->prescribed_leaf_NC;
     s->lai = p->fix_lai;
 
-
     run_sim(cw, c, f, ma, m, p, s);
 
     /* clean up */
@@ -212,7 +211,7 @@ void run_sim(canopy_wk *cw, control *c, fluxes *f, met_arrays *ma, met *m,
 
             if (c->sub_daily) {
                 canopy(cw, c, f, ma, m, p, s);
-                printf("%d,%d,%lf\n", (int)year, doy, f->gpp*100.);
+
             } else {
 
                 if (s->lai > 0.0) {
@@ -248,9 +247,8 @@ void run_sim(canopy_wk *cw, control *c, fluxes *f, met_arrays *ma, met *m,
 
                 mate_C3_photosynthesis(c, f, m, p, s, s->day_length[doy],
                                        ncontent);
-                printf("%d,%d,%lf\n", (int)year, doy, f->gpp*100.);
             }
-
+            printf("%d,%d,%lf\n", (int)year, doy, f->gpp*100.);
             c->day_idx++;
             /* ======================= **
             **   E N D   O F   D A Y   **
