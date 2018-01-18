@@ -169,7 +169,7 @@ void read_daily_met_data(char **argv, control *c, met_arrays *ma)
                     *argv, (int)i+1+skipped_lines, nvars);
             exit(EXIT_FAILURE);
         }
-        
+
         /* Build an array of the unique years as we loop over the input file */
         if (current_yr != ma->year[i]) {
             c->num_years++;

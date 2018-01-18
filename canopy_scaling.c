@@ -94,10 +94,10 @@ int main(int argc, char **argv)
         fprintf(stderr, "\n%s\n", c->git_code_ver);
         exit(EXIT_FAILURE);
     }
-
     if (c->sub_daily) {
         read_subdaily_met_data(argv, c, ma);
         fill_up_solar_arrays(cw, c, ma, p);
+
     } else {
         read_daily_met_data(argv, c, ma);
     }
@@ -209,6 +209,7 @@ void run_sim(canopy_wk *cw, control *c, fluxes *f, met_arrays *ma, met *m,
 
             if (c->sub_daily) {
                 canopy(cw, c, f, ma, m, p, s);
+                printf("%d,%d,%lf\n", (int)year, doy, f->gpp*100.);
             } else {
                 if (s->lai > 0.0) {
                     /* average leaf nitrogen content (g N m-2 leaf) */
@@ -451,12 +452,14 @@ void fill_up_solar_arrays(canopy_wk *cw, control *c, met_arrays *ma, params *p) 
     c->hour_idx = 0;
     for (nyr = 0; nyr < c->num_years; nyr++) {
         year = ma->year[c->hour_idx];
+
         if (is_leap_year(year))
             c->num_days = 366;
         else
             c->num_days = 365;
         for (doy = 0; doy < c->num_days; doy++) {
             for (hod = 0; hod < c->num_hlf_hrs; hod++) {
+
                 calculate_solar_geometry(cw, p, doy, hod);
                 sw_rad = ma->par[c->hour_idx] * PAR_2_SW; /* W m-2 */
                 get_diffuse_frac(cw, doy, sw_rad);

@@ -79,6 +79,7 @@ void canopy(canopy_wk *cw, control *c, fluxes *f, met_arrays *ma, met *m,
 
                     if (c->ps_pathway == C3) {
                         photosynthesis_C3(c, cw, m, p, s);
+                        
                     } else {
                         /* Nothing implemented */
                         fprintf(stderr, "C4 photosynthesis not implemented\n");
