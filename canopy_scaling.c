@@ -174,6 +174,7 @@ void run_sim(canopy_wk *cw, control *c, fluxes *f, met_arrays *ma, met *m,
     correct_rate_constants(p, FALSE);
 
     s->lai = p->fix_lai;
+    s->shootnc = 0.03;
 
     /* ====================== **
     **   Y E A R    L O O P   **
@@ -206,11 +207,12 @@ void run_sim(canopy_wk *cw, control *c, fluxes *f, met_arrays *ma, met *m,
             if (! c->sub_daily) {
                 unpack_met_data(c, f, ma, m, dummy, s->day_length[doy]);
             }
-
+            
             if (c->sub_daily) {
                 canopy(cw, c, f, ma, m, p, s);
                 printf("%d,%d,%lf\n", (int)year, doy, f->gpp*100.);
             } else {
+
                 if (s->lai > 0.0) {
                     /* average leaf nitrogen content (g N m-2 leaf) */
                     leafn = (s->shootnc * p->cfracts / p->sla * KG_AS_G);
@@ -225,12 +227,13 @@ void run_sim(canopy_wk *cw, control *c, fluxes *f, met_arrays *ma, met *m,
                     When canopy is not closed, canopy light interception is
                     reduced - calculate the fractional ground cover
                 */
-                if (s->lai < p->lai_closed) {
-                    /* discontinuous canopies */
-                    fc = s->lai / p->lai_closed;
-                } else {
-                    fc = 1.0;
-                }
+                //if (s->lai < p->lai_closed) {
+                //    /* discontinuous canopies */
+                //    fc = s->lai / p->lai_closed;
+                //} else {
+                //    fc = 1.0;
+                //}
+                fc = 1.0;
 
                 /*
                     fIPAR - the fraction of intercepted PAR = IPAR/PAR incident
