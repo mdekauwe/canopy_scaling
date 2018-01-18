@@ -105,6 +105,11 @@ int main(int argc, char **argv)
     s->wtfac_topsoil = 1.0;
     s->wtfac_root = 1.0;
 
+    if (c->ncycle == FALSE)
+        s->shootnc = p->prescribed_leaf_NC;
+    s->lai = p->fix_lai;
+
+
     run_sim(cw, c, f, ma, m, p, s);
 
     /* clean up */
@@ -173,9 +178,6 @@ void run_sim(canopy_wk *cw, control *c, fluxes *f, met_arrays *ma, met *m,
      */
     correct_rate_constants(p, FALSE);
 
-    s->lai = p->fix_lai;
-    s->shootnc = 0.03;
-
     /* ====================== **
     **   Y E A R    L O O P   **
     ** ====================== */
@@ -207,7 +209,7 @@ void run_sim(canopy_wk *cw, control *c, fluxes *f, met_arrays *ma, met *m,
             if (! c->sub_daily) {
                 unpack_met_data(c, f, ma, m, dummy, s->day_length[doy]);
             }
-            
+
             if (c->sub_daily) {
                 canopy(cw, c, f, ma, m, p, s);
                 printf("%d,%d,%lf\n", (int)year, doy, f->gpp*100.);
