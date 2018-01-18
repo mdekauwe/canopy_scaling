@@ -98,7 +98,6 @@ void   usage(char **);
 void   run_sim(canopy_wk *, control *, fluxes *, met_arrays *, met *,
                params *p, state *);
 
-void   correct_rate_constants(params *, int output);
 void   unpack_met_data(control *, fluxes *f, met_arrays *, met *, int, double);
 void   fill_up_solar_arrays(canopy_wk *, control *, met_arrays *, params *);
 
