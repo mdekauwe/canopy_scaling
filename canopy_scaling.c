@@ -178,7 +178,7 @@ void run_sim(canopy_wk *cw, control *c, fluxes *f, met_arrays *ma, met *m,
     c->day_idx = 0;
     c->hour_idx = 0;
 
-    printf("year,doy,gpp\n");
+    printf("year,doy,gpp,apar\n");
 
     for (nyr = 0; nyr < c->num_years; nyr++) {
 
@@ -243,7 +243,7 @@ void run_sim(canopy_wk *cw, control *c, fluxes *f, met_arrays *ma, met *m,
                 mate_C3_photosynthesis(c, f, m, p, s, s->day_length[doy],
                                        ncontent);
             }
-            printf("%d,%d,%lf\n", (int)year, doy, f->gpp*100.);
+            printf("%d,%d,%lf,%lf\n", (int)year, doy, f->gpp*100., f->apar);
             c->day_idx++;
             /* ======================= **
             **   E N D   O F   D A Y   **

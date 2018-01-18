@@ -226,6 +226,7 @@ void calculate_jmaxt_vcmaxt(control *c, canopy_wk *cw, params *p, state *s,
     double tref = p->measurement_temp;
     double cscalar = cw->cscalar[cw->ileaf];
 
+
     if (c->modeljm == 0) {
         if (cw->ileaf == SUNLIT) {
             *jmax = p->jmax * cscalar;
