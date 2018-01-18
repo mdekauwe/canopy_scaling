@@ -170,12 +170,7 @@ void run_sim(canopy_wk *cw, control *c, fluxes *f, met_arrays *ma, met *m,
 
     double nitfac, year;
     double leafn, fc, ncontent;
-    /*
-     * Params are defined in per year, needs to be per day. Important this is
-     * done here as rate constants elsewhere in the code are assumed to be in
-     * units of days not years
-     */
-    correct_rate_constants(p, FALSE);
+
 
     /* ====================== **
     **   Y E A R    L O O P   **
@@ -259,7 +254,6 @@ void run_sim(canopy_wk *cw, control *c, fluxes *f, met_arrays *ma, met *m,
     /* ========================= **
     **   E N D   O F   Y E A R   **
     ** ========================= */
-    correct_rate_constants(p, TRUE);
 
     return;
 
@@ -310,55 +304,6 @@ void usage(char **argv) {
     return;
 }
 
-void correct_rate_constants(params *p, int output) {
-    /* adjust rate constants for the number of days in years */
-
-    if (output) {
-        p->rateuptake *= NDAYS_IN_YR;
-        p->rateloss *= NDAYS_IN_YR;
-        p->retransmob *= NDAYS_IN_YR;
-        p->fdecay *= NDAYS_IN_YR;
-        p->fdecaydry *= NDAYS_IN_YR;
-        p->crdecay *= NDAYS_IN_YR;
-        p->rdecay *= NDAYS_IN_YR;
-        p->rdecaydry *= NDAYS_IN_YR;
-        p->bdecay *= NDAYS_IN_YR;
-        p->wdecay *= NDAYS_IN_YR;
-        p->sapturnover *= NDAYS_IN_YR;
-        p->kdec1 *= NDAYS_IN_YR;
-        p->kdec2 *= NDAYS_IN_YR;
-        p->kdec3 *= NDAYS_IN_YR;
-        p->kdec4 *= NDAYS_IN_YR;
-        p->kdec5 *= NDAYS_IN_YR;
-        p->kdec6 *= NDAYS_IN_YR;
-        p->kdec7 *= NDAYS_IN_YR;
-        p->nuptakez *= NDAYS_IN_YR;
-        p->nmax *= NDAYS_IN_YR;
-    } else {
-        p->rateuptake /= NDAYS_IN_YR;
-        p->rateloss /= NDAYS_IN_YR;
-        p->retransmob /= NDAYS_IN_YR;
-        p->fdecay /= NDAYS_IN_YR;
-        p->fdecaydry /= NDAYS_IN_YR;
-        p->crdecay /= NDAYS_IN_YR;
-        p->rdecay /= NDAYS_IN_YR;
-        p->rdecaydry /= NDAYS_IN_YR;
-        p->bdecay /= NDAYS_IN_YR;
-        p->wdecay /= NDAYS_IN_YR;
-        p->sapturnover /= NDAYS_IN_YR;
-        p->kdec1 /= NDAYS_IN_YR;
-        p->kdec2 /= NDAYS_IN_YR;
-        p->kdec3 /= NDAYS_IN_YR;
-        p->kdec4 /= NDAYS_IN_YR;
-        p->kdec5 /= NDAYS_IN_YR;
-        p->kdec6 /= NDAYS_IN_YR;
-        p->kdec7 /= NDAYS_IN_YR;
-        p->nuptakez /= NDAYS_IN_YR;
-        p->nmax /= NDAYS_IN_YR;
-    }
-
-    return;
-}
 
 void unpack_met_data(control *c, fluxes *f, met_arrays *ma, met *m, int hod,
                      double day_length) {
